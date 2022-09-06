@@ -1,5 +1,9 @@
 package EdSoftwareServicios.appMisionTIC;
 
+import EdSoftwareServicios.appMisionTIC.entities.Empleado;
+import EdSoftwareServicios.appMisionTIC.entities.Empresa;
+import EdSoftwareServicios.appMisionTIC.entities.MovimientoDinero;
+import EdSoftwareServicios.appMisionTIC.entities.Rol;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 

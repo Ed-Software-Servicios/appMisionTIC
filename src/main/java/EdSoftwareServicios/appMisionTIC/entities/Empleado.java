@@ -1,4 +1,9 @@
-package EdSoftwareServicios.appMisionTIC;
+package EdSoftwareServicios.appMisionTIC.entities;
+
+import org.springframework.stereotype.Service;
+
+import javax.persistence.*;
+
 
 public class Empleado {
     private String nombre;

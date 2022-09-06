@@ -1,4 +1,4 @@
-package EdSoftwareServicios.appMisionTIC;
+package EdSoftwareServicios.appMisionTIC.entities;
 
 public class Empresa {
     private String nombre;
