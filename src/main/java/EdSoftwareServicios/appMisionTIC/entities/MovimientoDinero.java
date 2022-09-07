@@ -1,9 +1,32 @@
 package EdSoftwareServicios.appMisionTIC.entities;
 
+
+import javax.persistence.*;
+
+@Entity
+@Table(name = "movimientos")
 public class MovimientoDinero {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id", nullable = false)
+    private Long id;
+    @Column(name = "Monto")
     private double monto;
+    @Column(name = "Concepto")
     private String concepto;
+    @Column(name = "Fecha")
     private String fecha;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public MovimientoDinero() {
+    }
 
     public MovimientoDinero(double monto, String concepto, String fecha) {
         this.monto = monto;

@@ -1,17 +1,35 @@
 package EdSoftwareServicios.appMisionTIC.entities;
 
-import org.springframework.stereotype.Service;
-
 import javax.persistence.*;
 
-
+@Entity
+@Table(name = "Usuarios")
 public class Empleado {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id", nullable = false)
+    private Long id;
+    @Column(name = "Nombre")
     private String nombre;
+    @Column(name = "Correo")
     private String correo;
-    private Empresa empresaJefe;
+    @Column(name = "Empresa")
+    private String empresaJefe;
+    @Column(name = "Rol")
     private Rol rolEmpleado;
 
-    public Empleado(String nombre, String correo, Empresa empresaJefe, Rol rolEmpleado) {
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Empleado() {
+    }
+
+    public Empleado(String nombre, String correo, String empresaJefe, Rol rolEmpleado) {
         this.nombre = nombre;
         this.correo = correo;
         this.empresaJefe = empresaJefe;
@@ -34,11 +52,11 @@ public class Empleado {
         this.correo = correo;
     }
 
-    public Empresa getEmpresaJefe() {
+    public String getEmpresaJefe() {
         return empresaJefe;
     }
 
-    public void setEmpresaJefe(Empresa empresaJefe) {
+    public void setEmpresaJefe(String empresaJefe) {
         this.empresaJefe = empresaJefe;
     }
 

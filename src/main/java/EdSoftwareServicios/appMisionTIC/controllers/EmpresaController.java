@@ -1,20 +1,34 @@
 package EdSoftwareServicios.appMisionTIC.controllers;
 
 
+import EdSoftwareServicios.appMisionTIC.entities.Empresa;
+import EdSoftwareServicios.appMisionTIC.services.EmpresaServices;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+
+
+import java.util.List;
 
 
 @RestController
 public class EmpresaController {
 
-    @GetMapping("/enterprises")
-    public String Empresa(){
-        return "si se ve esta funcionando, y ahora se actualiza tambien";
+    EmpresaServices servicio;
+
+    public EmpresaController(EmpresaServices servicio){
+        this.servicio = servicio;
     }
 
-    @GetMapping("/enterprises/id")
-    public String entre(){
-        return "Que es esto?";
+    @GetMapping("/enterprises")
+    public List<Empresa> listaEmpresas(){
+        return this.servicio.getListaEmpresas();
     }
+
+    @PostMapping("/enterprises")
+    public Empresa createEmpresa(@RequestBody Empresa nuevaEmpresa){
+        return this.servicio.createEmpresa(nuevaEmpresa);
+    }
+
 }

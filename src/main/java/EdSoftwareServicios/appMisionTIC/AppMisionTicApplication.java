@@ -15,7 +15,7 @@ public class AppMisionTicApplication {
 		SpringApplication.run(AppMisionTicApplication.class, args);
 		//Instansacion de las clases
 		Empresa empresa = new Empresa("Empresademo Ltda. ", "Carrera 7 # 13", 7234123, 5432143);
-		Empleado vendedor = new Empleado("Juan", "Juan@gmail.com", empresa, Rol.OPERATIVO);
+		Empleado vendedor = new Empleado("Juan", "Juan@gmail.com", "empresa", Rol.OPERATIVO);
 		MovimientoDinero movimiento = new MovimientoDinero(654343.50,"ingresos de julio", "31-julio-2022");
 
 		//Modificacion de los datos de la clase
