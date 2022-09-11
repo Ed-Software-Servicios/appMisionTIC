@@ -1,20 +1,17 @@
 package EdSoftwareServicios.appMisionTIC.controllers;
 
 import EdSoftwareServicios.appMisionTIC.entities.Empleado;
-import EdSoftwareServicios.appMisionTIC.services.EmpleadoServices;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import EdSoftwareServicios.appMisionTIC.services.UsuariosServices;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 public class UsuariosController {
 
-    EmpleadoServices servicio;
+    UsuariosServices servicio;
 
-    public UsuariosController(EmpleadoServices servicio){
+    public UsuariosController(UsuariosServices servicio){
         this.servicio = servicio;
     }
 
@@ -23,10 +20,23 @@ public class UsuariosController {
         return this.servicio.getListaEmpleados();
     }
 
+    @GetMapping("/users/{id}")
+    public Empleado empleadoBuscado(@PathVariable Long id){
+        return this.servicio.getEmpleado(id);
+    }
+
     @PostMapping("/users")
     public Empleado createEmpleado(@RequestBody Empleado nuevoEmpleado){
         return this.servicio.createEmpleado(nuevoEmpleado);
     }
+    @DeleteMapping("/users/{id}")
+    public void deleteEmpresa(@PathVariable Long id){
+        this.servicio.deleteEmpleado(id);
+    }
 
+    @PatchMapping("/users/{id}")
+    public void patchEmpleado(@PathVariable Long id, @RequestBody Empleado modificaciones){
+        this.servicio.patchUsuario(id,modificaciones);
+    }
 
 }

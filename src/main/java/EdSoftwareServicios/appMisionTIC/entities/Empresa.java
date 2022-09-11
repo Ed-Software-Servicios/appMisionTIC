@@ -1,14 +1,15 @@
 package EdSoftwareServicios.appMisionTIC.entities;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name="Empresas")
 public class Empresa {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id")
-    private Long id;
+    @Column(name = "empresaId")
+    private Long empresaId;
 
     @Column(name = "Nombre")
     private String nombre;
@@ -19,13 +20,12 @@ public class Empresa {
     @Column(name = "NIT")
     private int nit;
 
-    public Long getId() {
-        return id;
-    }
+    @OneToMany(mappedBy = "empresa")
+    private List<MovimientoDinero> movimientos;
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+    @OneToMany(mappedBy = "empresaJefe")
+    private List<Empleado> empleados;
+
 
     public Empresa() {
     }
@@ -37,6 +37,21 @@ public class Empresa {
         this.setNit(nit);
     }
 
+    public List<MovimientoDinero> getMovimientos() {
+        return movimientos;
+    }
+
+    public void setMovimientos(List<MovimientoDinero> movimientos) {
+        this.movimientos = movimientos;
+    }
+
+    public Long getEmpresaId() {
+        return empresaId;
+    }
+
+    public void setEmpresaId(Long id) {
+        this.empresaId = id;
+    }
 
     public String getNombre() {
         return nombre;
@@ -68,5 +83,12 @@ public class Empresa {
 
     public void setNit(int nit) {
         this.nit = nit;
+    }
+
+    public List<Empleado> getEmpleados() {
+        return empleados;
+    }
+    public void setEmpleados(List<Empleado> empleados) {
+        this.empleados = empleados;
     }
 }

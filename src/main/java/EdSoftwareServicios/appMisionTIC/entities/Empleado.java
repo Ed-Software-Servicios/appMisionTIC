@@ -1,5 +1,7 @@
 package EdSoftwareServicios.appMisionTIC.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 
 @Entity
@@ -7,32 +9,29 @@ import javax.persistence.*;
 public class Empleado {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id", nullable = false)
-    private Long id;
+    @Column(name = "EmpleadoId", nullable = false)
+    private Long empleadoId;
     @Column(name = "Nombre")
     private String nombre;
     @Column(name = "Correo")
     private String correo;
-    @Column(name = "Empresa")
-    private String empresaJefe;
-    @Column(name = "Rol")
+    @ManyToOne
+    @JoinColumn(name = "empresaId")
+    @JsonBackReference
+    private Empresa empresaJefe;
+    @Enumerated(EnumType.STRING)
     private Rol rolEmpleado;
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
+    @Column(name="idEmpresa")
+    private Long empresaId;
 
     public Empleado() {
     }
 
-    public Empleado(String nombre, String correo, String empresaJefe, Rol rolEmpleado) {
+    public Empleado(String nombre, String correo, Long idEmpresa, Rol rolEmpleado) {
         this.nombre = nombre;
         this.correo = correo;
-        this.empresaJefe = empresaJefe;
+        this.empresaId = idEmpresa;
         this.rolEmpleado = rolEmpleado;
     }
 
@@ -52,11 +51,11 @@ public class Empleado {
         this.correo = correo;
     }
 
-    public String getEmpresaJefe() {
+    public Empresa getEmpresaJefe() {
         return empresaJefe;
     }
 
-    public void setEmpresaJefe(String empresaJefe) {
+    public void setEmpresaJefe(Empresa empresaJefe) {
         this.empresaJefe = empresaJefe;
     }
 
@@ -67,4 +66,23 @@ public class Empleado {
     public void setRolEmpleado(Rol rolEmpleado) {
         this.rolEmpleado = rolEmpleado;
     }
+
+    public Long getEmpresaId() {
+        return empresaId;
+    }
+
+    public void setEmpresaId(Long empresaId) {
+        this.empresaId = empresaId;
+    }
+
+    public Long getEmpleadoId() {
+        return empleadoId;
+    }
+
+    public void setEmpleadoId(Long id) {
+        this.empleadoId = id;
+    }
+
+
+
 }

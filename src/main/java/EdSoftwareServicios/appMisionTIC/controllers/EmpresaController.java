@@ -3,10 +3,7 @@ package EdSoftwareServicios.appMisionTIC.controllers;
 
 import EdSoftwareServicios.appMisionTIC.entities.Empresa;
 import EdSoftwareServicios.appMisionTIC.services.EmpresaServices;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 
 import java.util.List;
@@ -26,9 +23,25 @@ public class EmpresaController {
         return this.servicio.getListaEmpresas();
     }
 
+    @GetMapping("/enterprises/{id}")
+    public Empresa empresaBuscada(@PathVariable Long id){
+        return this.servicio.getEmpresa(id);
+    }
+
     @PostMapping("/enterprises")
     public Empresa createEmpresa(@RequestBody Empresa nuevaEmpresa){
         return this.servicio.createEmpresa(nuevaEmpresa);
     }
+
+    @DeleteMapping("/enterprises/{id}")
+    public void deleteEmpresa(@PathVariable Long id){
+        this.servicio.deleteEmpresa(id);
+    }
+
+    @PatchMapping("/enterprises/{id}")
+    public void patchEmpresa(@PathVariable Long id, @RequestBody Empresa modificaciones){
+        this.servicio.patchEmpresa(id,modificaciones);
+    }
+
 
 }
