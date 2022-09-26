@@ -1,6 +1,6 @@
 package EdSoftwareServicios.appMisionTIC.entities;
 
 public enum Rol {
-    ADMINISTRADOR,
-    OPERATIVO
+    ROLE_ADMINISTRADOR,
+    ROLE_OPERATIVO
 }

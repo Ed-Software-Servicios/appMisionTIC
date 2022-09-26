@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Enterprises</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+
+</head>
+<body>
+
+<nav class="navbar navbar-dark bg-dark fixed-top">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/">
+            <img src="img/projet.png" height="50"/>App Mision TIC
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="offcanvas offcanvas-end text-bg-dark" tabindex="-1" id="offcanvasDarkNavbar" aria-labelledby="offcanvasDarkNavbarLabel">
+            <div class="offcanvas-header">
+                <h5 class="offcanvas-title" id="offcanvasDarkNavbarLabel">Opciones</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body">
+                <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="/">Inicio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/movements">Ver Movimientos</a>
+                    </li>
+                    <li sec:authorize="hasRole('ADMINISTRADOR')" class="nav-item">
+                        <a class="nav-link" href="/users">Ver Empleados</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Cuenta
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-dark">
+                            <li><a class="dropdown-item" href="/login">Cambiar de Cuenta</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li>
+                                <form th:action="@{/logout}" method="post" class="align-center">
+                                    <button type="submit" class="btn btn-outline-secondary"> Cerrar sesion </button>
+                                </form>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+                <form class="d-flex" role="search">
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-success" type="submit">Search</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</nav>
+
+
+<main>
+    <div class="px-4 py-5 my-5 text-center">
+        <h1 class="display-5 fw-bold">Empresas</h1>
+        <div class="d-flex gap-4 justify-content-center">
+            <div class="d-flex flex-wrap col-10 gap-4">
+
+                <div th:each="empresa : ${empresas}" class="card" style="width: 18rem;">
+                    <img src="img/entreprise.png" class="d-block mx-auto" height="100">
+                    <div class="card-body">
+                        <h2 class="card-title" th:text="${empresa.nombre}">Card title</h2>
+                        <h5 class="card-text" th:text="${empresa.nit}">Nit</h5>
+                        <h5 class="card-text" th:text="${empresa.direccion}">direccion</h5>
+                        <h5 class="card-text" th:text="${empresa.telefono}">Card title</h5>
+                        <div sec:authorize="hasRole('ADMINISTRADOR')" class="d-flex flex-column gap-3">
+                            <div>
+                                <a th:href="@{/enterprises/{id}(id=${empresa.empresaId})}" class="btn btn-outline-secondary">Modificar</a>
+                            </div>
+                            <div>
+                                <form th:action="@{/enterprises/{id}(id=${empresa.empresaId})}" th:method="delete">
+                                    <button type="submit" class="btn btn-outline-danger">Eliminar Empresa</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div sec:authorize="hasRole('ADMINISTRADOR')" class="sidenav" align="right" >
+                <button type="button" class="btn btn-primary mx-auto" data-bs-toggle="modal" data-bs-target="#nuevaEmpresa">
+                    Crear Nueva Empresa
+                </button>
+            </div>
+        </div>
+    </div>
+
+
+</main>
+
+<!-- Modal Nueva Empresa-->
+<div class="modal fade" id="nuevaEmpresa" tabindex="-1" aria-labelledby="nuevaEmpresa" aria-hidden="true" data-bs-backdrop="static">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="Title">Nueva Empresa</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form th:action="@{enterprises}" th:object="${nuevaEmpresa}" th:method="post" class="row g-3 needs-validation" novalidate>
+
+                    <div class="position-relative">
+                        <label for="nombre" class="form-label">Nombre</label>
+                        <input th:field="*{nombre}" type="text" class="form-control" id="nombre" value="" required>
+                        <div class="valid-tooltip">
+                            Looks good!
+                        </div>
+                    </div>
+                    <div class="position-relative">
+                        <label for="nit" class="form-label">NIT</label>
+                        <input th:field="*{nit}" type="number" class="form-control" id="nit" value="" required>
+                        <div class="valid-tooltip">
+                            Looks good!
+                        </div>
+                    </div>
+                    <div class="position-relative">
+                        <label for="direccion" class="form-label">Direccion</label>
+                        <input th:field="*{direccion}" type="text" class="form-control" id="direccion" value="" required>
+                        <div class="valid-tooltip">
+                            Looks good!
+                        </div>
+                    </div>
+                    <div class="position-relative">
+                        <label for="telefono" class="form-label">Telefono</label>
+                        <input th:field="*{telefono}" type="number" class="form-control" id="telefono" required>
+                        <div class="invalid-tooltip">
+                            Please provide a valid city.
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-primary">Agregar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
+
+
+</body>
+</html>

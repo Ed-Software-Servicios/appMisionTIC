@@ -9,16 +9,16 @@ public class Empresa {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "empresaId")
-    private Long empresaId;
+    public Long empresaId;
 
     @Column(name = "Nombre")
     private String nombre;
     @Column(name = "Direccion")
     private String direccion;
     @Column(name = "Telefono")
-    private long telefono;
+    private Long telefono;
     @Column(name = "NIT")
-    private int nit;
+    private Long nit;
 
     @OneToMany(mappedBy = "empresa")
     private List<MovimientoDinero> movimientos;
@@ -26,16 +26,21 @@ public class Empresa {
     @OneToMany(mappedBy = "empresaJefe")
     private List<Empleado> empleados;
 
+    @Column(name="Total")
+    private Double total =0.0;
+
 
     public Empresa() {
     }
 
-    public Empresa(String nombre, String direccion, long telefono, int nit){
+    public Empresa(String nombre, String direccion, Long telefono, Long nit){
         this.setNombre(nombre);
         this.setDireccion(direccion);
         this.setTelefono(telefono);
         this.setNit(nit);
+        this.setTotal(0.0);
     }
+
 
     public List<MovimientoDinero> getMovimientos() {
         return movimientos;
@@ -69,19 +74,19 @@ public class Empresa {
         this.direccion = direccion;
     }
 
-    public long getTelefono() {
+    public Long getTelefono() {
         return telefono;
     }
 
-    public void setTelefono(long telefono) {
+    public void setTelefono(Long telefono) {
         this.telefono = telefono;
     }
 
-    public int getNit() {
+    public Long getNit() {
         return nit;
     }
 
-    public void setNit(int nit) {
+    public void setNit(Long nit) {
         this.nit = nit;
     }
 
@@ -91,4 +96,13 @@ public class Empresa {
     public void setEmpleados(List<Empleado> empleados) {
         this.empleados = empleados;
     }
+
+    public Double getTotal() {
+        return total;
+    }
+
+    public void setTotal(Double monto) {
+        this.total += monto;
+    }
+    
 }

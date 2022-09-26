@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 
 
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 @Service
 public class UsuariosServices {
@@ -27,6 +29,10 @@ public class UsuariosServices {
         return this.repositorio.findByEmpleadoId(id);
     }
 
+    public Empleado getUsuario(String correo){
+        return this.repositorio.findByCorreo(correo);
+    }
+
     public Empleado createEmpleado(Empleado nuevoEmpleado){
         Empresa empresaJef = this.repositorioEmpresa.findByEmpresaId(nuevoEmpleado.getEmpresaId());
         nuevoEmpleado.setEmpresaJefe(empresaJef);
@@ -43,23 +49,28 @@ public class UsuariosServices {
 
         boolean seModifica = false;
 
-        if (modificaciones.getCorreo()!= null){
+        if (!Objects.equals(modificaciones.getCorreo(), empleadoPorModificar.getCorreo())){
             empleadoPorModificar.setCorreo(modificaciones.getCorreo());
             seModifica = true;
         }
 
-        if (modificaciones.getNombre() != null)  {
+        if (!Objects.equals(modificaciones.getNombre(), empleadoPorModificar.getNombre()))  {
             empleadoPorModificar.setNombre(modificaciones.getNombre());
             seModifica = true;
         }
 
-        if (modificaciones.getEmpresaId() != null)  {
+        if (!Objects.equals(modificaciones.getPassword(), empleadoPorModificar.getPassword()))  {
+            empleadoPorModificar.setPassword(modificaciones.getPassword());
+            seModifica = true;
+        }
+
+        if (!Objects.equals(modificaciones.getEmpresaId(), empleadoPorModificar.getEmpresaId()))  {
             empleadoPorModificar.setEmpresaId(modificaciones.getEmpresaId());
             Empresa empresaJef = this.repositorioEmpresa.findByEmpresaId(modificaciones.getEmpresaId());
             empleadoPorModificar.setEmpresaJefe(empresaJef);
             seModifica = true;
         }
-        if (modificaciones.getRolEmpleado() != null)  {
+        if (modificaciones.getRolEmpleado() != empleadoPorModificar.getRolEmpleado())  {
             empleadoPorModificar.setRolEmpleado(modificaciones.getRolEmpleado());
             seModifica = true;
         }

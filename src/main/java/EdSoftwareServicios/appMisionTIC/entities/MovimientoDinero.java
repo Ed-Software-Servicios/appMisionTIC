@@ -1,8 +1,8 @@
 package EdSoftwareServicios.appMisionTIC.entities;
 
 
+import EdSoftwareServicios.appMisionTIC.TipoMovimiento;
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import net.bytebuddy.asm.Advice;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -13,10 +13,13 @@ public class MovimientoDinero {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "MovimientoId", nullable = false)
-    private Long movimientoId;
+    public Long movimientoId;
+
+    @Column(name = "TipoMovimiento")
+    TipoMovimiento tipoMovimiento;
 
     @Column(name = "Monto")
-    private double monto;
+    private Double monto;
     @Column(name = "Concepto")
     private String concepto;
     @Column(name = "Fecha")
@@ -38,17 +41,22 @@ public class MovimientoDinero {
     public MovimientoDinero() {
     }
 
-    public MovimientoDinero(double monto, String concepto, LocalDate fecha) {
-        this.monto = monto;
+    public MovimientoDinero(String monto, String concepto, LocalDate fecha, TipoMovimiento tipoMovimiento) {
+        this.tipoMovimiento = tipoMovimiento;
         this.concepto = concepto;
         this.fecha = fecha;
+        double valorMonto =Double.parseDouble(monto);
+        if (tipoMovimiento==TipoMovimiento.EGRESO || valorMonto>0){
+            this.monto = valorMonto*-1;
+        }else
+            this.monto = valorMonto;
     }
 
-    public double getMonto() {
+    public Double getMonto() {
         return monto;
     }
 
-    public void setMonto(double monto) {
+    public void setMonto(Double monto) {
         this.monto = monto;
     }
 
@@ -75,4 +83,13 @@ public class MovimientoDinero {
     public void setEmpresa(Empresa empresa) {
         this.empresa = empresa;
     }
+
+    public TipoMovimiento getTipoMovimiento() {
+        return tipoMovimiento;
+    }
+
+    public void setTipoMovimiento(TipoMovimiento tipoMovimiento) {
+        this.tipoMovimiento = tipoMovimiento;
+    }
+
 }

@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class EmpresaServices {
@@ -25,12 +26,10 @@ public class EmpresaServices {
     }
 
     public Empresa createEmpresa(Empresa nuevaEmpresa){
-
         return this.repositorio.save(nuevaEmpresa);
     }
 
     public void deleteEmpresa(Long id) {
-
         this.repositorio.deleteById(id);
     }
 
@@ -40,21 +39,21 @@ public class EmpresaServices {
 
         boolean seModifica = false;
 
-        if (modificaciones.getNombre()!=null) {
+        if (!Objects.equals(modificaciones.getNombre(), empresaPorModificar.getNombre())) {
             empresaPorModificar.setNombre(modificaciones.getNombre());
             seModifica = true;
         }
 
-        if (modificaciones.getDireccion()!=null) {
+        if (!Objects.equals(modificaciones.getDireccion(), empresaPorModificar.getDireccion())) {
             empresaPorModificar.setDireccion(modificaciones.getDireccion());
             seModifica = true;
         }
 
-        if (modificaciones.getNit() > 0) {
+        if (!Objects.equals(modificaciones.getNit(), empresaPorModificar.getNit())) {
             empresaPorModificar.setNit(modificaciones.getNit());
             seModifica = true;
         }
-        if (modificaciones.getTelefono() > 0) {
+        if (!Objects.equals(modificaciones.getTelefono(), empresaPorModificar.getTelefono())) {
             empresaPorModificar.setTelefono(modificaciones.getTelefono());
             seModifica = true;
         }
