@@ -48,7 +48,11 @@
               <li>
                 <hr class="dropdown-divider">
               </li>
-              <li><form th:action="@{/logout}" method="post"><a class="dropdown-item" type="submit">Cerrar Sesion</a></form></li>
+              <li>
+                <form th:action="@{/logout}" method="post" class="align-center">
+                  <button type="submit" class="btn btn-outline-secondary"> Cerrar sesion </button>
+                </form>
+              </li>
             </ul>
           </li>
         </ul>
@@ -92,7 +96,7 @@
               <input type="text" class="form-control" placeholder="Correo electronico" aria-label="Username" aria-describedby="basic-addon1" th:field="*{correo}">
             </div>
             <div>
-              <a type="button" class="btn btn-secondary" href="/enterprises">Cancelar</a>
+              <a type="button" class="btn btn-secondary" href="/users">Cancelar</a>
               <button type="submit" class="btn btn-warning">Actualizar</button>
             </div>
           </div>
